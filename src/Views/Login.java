@@ -29,48 +29,48 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         tableJob = new javax.swing.JPanel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        inputCorreoLogin = new javax.swing.JTextField();
+        enlaceRegisterLogin = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        buttonInitLogin = new javax.swing.JLabel();
+        inputPasswordLogin = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tableJob.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField3.setBackground(new java.awt.Color(0, 0, 0));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField3.setText("Correo");
-        jTextField3.setBorder(null);
-        tableJob.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 330, 290, 20));
+        inputCorreoLogin.setBackground(new java.awt.Color(0, 0, 0));
+        inputCorreoLogin.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
+        inputCorreoLogin.setForeground(new java.awt.Color(153, 153, 153));
+        inputCorreoLogin.setText("Correo");
+        inputCorreoLogin.setBorder(null);
+        tableJob.add(inputCorreoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 330, 290, 20));
 
-        jLabel2.setBackground(new java.awt.Color(51, 51, 255));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("¿No tienes cuenta? Regístrate");
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel2.setFocusCycleRoot(true);
-        jLabel2.setFocusTraversalPolicyProvider(true);
-        tableJob.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 560, 280, -1));
+        enlaceRegisterLogin.setBackground(new java.awt.Color(51, 51, 255));
+        enlaceRegisterLogin.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        enlaceRegisterLogin.setForeground(new java.awt.Color(204, 255, 255));
+        enlaceRegisterLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enlaceRegisterLogin.setText("¿No tienes cuenta? Regístrate");
+        enlaceRegisterLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        enlaceRegisterLogin.setFocusCycleRoot(true);
+        enlaceRegisterLogin.setFocusTraversalPolicyProvider(true);
+        tableJob.add(enlaceRegisterLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 560, 280, -1));
         tableJob.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 580, 190, 20));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Iniciar sesión");
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tableJob.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 480, 300, 60));
+        buttonInitLogin.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        buttonInitLogin.setForeground(new java.awt.Color(255, 255, 255));
+        buttonInitLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        buttonInitLogin.setText("Iniciar sesión");
+        buttonInitLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tableJob.add(buttonInitLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 480, 300, 60));
 
-        jPasswordField1.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(153, 153, 153));
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setBorder(null);
-        tableJob.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 400, 290, 30));
+        inputPasswordLogin.setBackground(new java.awt.Color(0, 0, 0));
+        inputPasswordLogin.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        inputPasswordLogin.setForeground(new java.awt.Color(153, 153, 153));
+        inputPasswordLogin.setText("jPasswordField1");
+        inputPasswordLogin.setBorder(null);
+        tableJob.add(inputPasswordLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 400, 290, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/marco9.gif"))); // NOI18N
         tableJob.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -115,12 +115,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel buttonInitLogin;
+    private javax.swing.JLabel enlaceRegisterLogin;
+    private javax.swing.JTextField inputCorreoLogin;
+    private javax.swing.JPasswordField inputPasswordLogin;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JPanel tableJob;
     // End of variables declaration//GEN-END:variables
 }

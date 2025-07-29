@@ -4,12 +4,19 @@
  */
 package Views;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import conectDB.conectMysql;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  *
  * @author Geison Medina
  */
 public class Register extends javax.swing.JFrame {
-    
+    conectMysql con = new conectMysql();
+    Connection cn = con.conectar();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Register.class.getName());
 
     /**
@@ -17,6 +24,7 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         initComponents();
+        showData();
     }
 
     /**
@@ -29,74 +37,79 @@ public class Register extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        enlaceBackRegister = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        buttonRegister = new javax.swing.JLabel();
+        inputCorreoRegister = new javax.swing.JTextField();
+        inputNamesRegister = new javax.swing.JTextField();
+        inputTelRegister = new javax.swing.JFormattedTextField();
+        inputPasswordConfirmRegister = new javax.swing.JPasswordField();
+        inputPasswordRegister = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Volver a Accesso");
-        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 630, -1, -1));
+        enlaceBackRegister.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        enlaceBackRegister.setForeground(new java.awt.Color(255, 255, 255));
+        enlaceBackRegister.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enlaceBackRegister.setText("Volver a Accesso");
+        enlaceBackRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(enlaceBackRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 630, -1, -1));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 650, 120, 20));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Registrar");
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 562, 300, 50));
+        buttonRegister.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        buttonRegister.setForeground(new java.awt.Color(255, 255, 255));
+        buttonRegister.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        buttonRegister.setText("Registrar");
+        buttonRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(buttonRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 562, 300, 50));
 
-        jTextField1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField1.setText("Correo");
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        inputCorreoRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputCorreoRegister.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
+        inputCorreoRegister.setForeground(new java.awt.Color(153, 153, 153));
+        inputCorreoRegister.setText("Correo");
+        inputCorreoRegister.setBorder(null);
+        inputCorreoRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                inputCorreoRegisterActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 290, 30));
+        jPanel1.add(inputCorreoRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 290, 30));
 
-        jTextField5.setBackground(new java.awt.Color(0, 0, 0));
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(153, 153, 153));
-        jTextField5.setText("Nombre y Apellido");
-        jTextField5.setBorder(null);
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 182, 290, 30));
+        inputNamesRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputNamesRegister.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
+        inputNamesRegister.setForeground(new java.awt.Color(153, 153, 153));
+        inputNamesRegister.setText("Nombre y Apellido");
+        inputNamesRegister.setBorder(null);
+        inputNamesRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputNamesRegisterActionPerformed(evt);
+            }
+        });
+        jPanel1.add(inputNamesRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 182, 290, 30));
 
-        jFormattedTextField1.setBackground(new java.awt.Color(0, 0, 0));
-        jFormattedTextField1.setBorder(null);
-        jFormattedTextField1.setForeground(new java.awt.Color(153, 153, 153));
-        jFormattedTextField1.setText("Telefono");
-        jFormattedTextField1.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
-        jPanel1.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 500, 290, 30));
+        inputTelRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputTelRegister.setBorder(null);
+        inputTelRegister.setForeground(new java.awt.Color(153, 153, 153));
+        inputTelRegister.setText("Telefono");
+        inputTelRegister.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
+        jPanel1.add(inputTelRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 500, 290, 30));
 
-        jPasswordField1.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jPasswordField1.setForeground(new java.awt.Color(153, 153, 153));
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setBorder(null);
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 290, 30));
+        inputPasswordConfirmRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputPasswordConfirmRegister.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        inputPasswordConfirmRegister.setForeground(new java.awt.Color(153, 153, 153));
+        inputPasswordConfirmRegister.setText("jPasswordField1");
+        inputPasswordConfirmRegister.setBorder(null);
+        jPanel1.add(inputPasswordConfirmRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 290, 30));
 
-        jPasswordField2.setBackground(new java.awt.Color(0, 0, 0));
-        jPasswordField2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jPasswordField2.setForeground(new java.awt.Color(153, 153, 153));
-        jPasswordField2.setText("jPasswordField1");
-        jPasswordField2.setBorder(null);
-        jPanel1.add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 290, 30));
+        inputPasswordRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputPasswordRegister.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        inputPasswordRegister.setForeground(new java.awt.Color(153, 153, 153));
+        inputPasswordRegister.setText("jPasswordField1");
+        inputPasswordRegister.setBorder(null);
+        jPanel1.add(inputPasswordRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 290, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/marco7.gif"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -115,9 +128,13 @@ public class Register extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void inputCorreoRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCorreoRegisterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_inputCorreoRegisterActionPerformed
+
+    private void inputNamesRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputNamesRegisterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputNamesRegisterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,15 +162,34 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JLabel buttonRegister;
+    private javax.swing.JLabel enlaceBackRegister;
+    private javax.swing.JTextField inputCorreoRegister;
+    private javax.swing.JTextField inputNamesRegister;
+    private javax.swing.JPasswordField inputPasswordConfirmRegister;
+    private javax.swing.JPasswordField inputPasswordRegister;
+    private javax.swing.JFormattedTextField inputTelRegister;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
+
+    private void showData() {
+        String consultaSQL = "select * from users";
+        System.out.println();
+        String data[] = new String[6];
+
+        Statement st;
+        try {
+            st = cn.createStatement();
+            ResultSet rs = st.executeQuery(consultaSQL);
+            while (rs.next()) {
+                data[0] = rs.getString(2);
+            }
+
+            System.err.println(data[0] + "nada");
+        } catch (SQLException e) {
+            System.out.println("Error al mostrar Datos " + e);
+        }
+    }
 }
