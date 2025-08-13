@@ -4,19 +4,67 @@
  */
 package Views;
 
+import conectDB.UsuarioDAO;
+import clases.Usuario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Geison Medina
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
+    private UsuarioDAO usuarioDAO;
 
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        usuarioDAO = new UsuarioDAO();
+
+        // Acción clic en el enlace de registro
+        enlaceRegisterLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new Register().setVisible(true);
+                dispose(); // Cierra la ventana de login
+            }
+        });
+
+        // Acción clic en el botón de iniciar sesión
+        buttonInitLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                iniciarSesion();
+            }
+        });
+    }
+
+    private void iniciarSesion() {
+        String correo = inputCorreoLogin.getText().trim();
+        String password = new String(inputPasswordLogin.getPassword()).trim();
+
+        if (correo.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!usuarioDAO.esCorreoValido(correo)) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un correo válido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Usuario usuario = usuarioDAO.autenticarUsuario(correo, password);
+        if (usuario != null) {
+            JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getFullName());
+            new Shopping().setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -40,12 +88,17 @@ public class Login extends javax.swing.JFrame {
 
         tableJob.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        inputCorreoLogin.setBackground(new java.awt.Color(0, 0, 0));
+        inputCorreoLogin.setBackground(new java.awt.Color(0, 0, 0,0));
         inputCorreoLogin.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
         inputCorreoLogin.setForeground(new java.awt.Color(153, 153, 153));
         inputCorreoLogin.setText("Correo");
         inputCorreoLogin.setBorder(null);
-        tableJob.add(inputCorreoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 330, 290, 20));
+        inputCorreoLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputCorreoLoginActionPerformed(evt);
+            }
+        });
+        tableJob.add(inputCorreoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 320, 290, 30));
 
         enlaceRegisterLogin.setBackground(new java.awt.Color(51, 51, 255));
         enlaceRegisterLogin.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -63,9 +116,14 @@ public class Login extends javax.swing.JFrame {
         buttonInitLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         buttonInitLogin.setText("Iniciar sesión");
         buttonInitLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        buttonInitLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                buttonInitLoginKeyPressed(evt);
+            }
+        });
         tableJob.add(buttonInitLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 480, 300, 60));
 
-        inputPasswordLogin.setBackground(new java.awt.Color(0, 0, 0));
+        inputPasswordLogin.setBackground(new java.awt.Color(0, 0, 0, 0));
         inputPasswordLogin.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         inputPasswordLogin.setForeground(new java.awt.Color(153, 153, 153));
         inputPasswordLogin.setText("jPasswordField1");
@@ -88,6 +146,14 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void inputCorreoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputCorreoLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inputCorreoLoginActionPerformed
+
+    private void buttonInitLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buttonInitLoginKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonInitLoginKeyPressed
 
     /**
      * @param args the command line arguments

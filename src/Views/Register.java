@@ -4,27 +4,108 @@
  */
 package Views;
 
+import conectDB.UsuarioDAO;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import conectDB.conectMysql;
 import java.sql.Connection;
 import java.sql.SQLException;
+import clases.Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Geison Medina
  */
 public class Register extends javax.swing.JFrame {
+
     conectMysql con = new conectMysql();
     Connection cn = con.conectar();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Register.class.getName());
+    private final UsuarioDAO usuarioDAO;
 
     /**
      * Creates new form Register
      */
     public Register() {
         initComponents();
+        this.setLocationRelativeTo(null);
         showData();
+        usuarioDAO = new UsuarioDAO();
+
+        // Acción clic en el botón de registrar
+        buttonRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registrarUsuario();
+            }
+        });
+
+        // Acción clic en el enlace de volver a acceso
+        enlaceBackRegister.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                new Login().setVisible(true);
+                dispose();
+            }
+        });
+
+    }
+
+    private void registrarUsuario() {
+        String fullName = inputNamesRegister.getText().trim();
+        String correo = inputCorreoRegister.getText().trim();
+        String password = new String(inputPasswordRegister.getPassword()).trim();
+        String passwordConfirm = new String(inputPasswordConfirmRegister.getPassword()).trim();
+        String telefono = inputTelRegister.getText().trim();
+
+        // Validar campos vacíos
+        if (fullName.isEmpty() || correo.isEmpty() || password.isEmpty() || telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar formato de correo
+        if (!usuarioDAO.esCorreoValido(correo)) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un correo válido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar que las contraseñas coincidan
+        if (!password.equals(passwordConfirm)) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar longitud mínima de contraseña
+        if (password.length() < 8) {
+            JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 8 caracteres", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Verificar si el correo ya existe
+        if (usuarioDAO.correoExiste(correo)) {
+            JOptionPane.showMessageDialog(this, "El correo ya está registrado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Usuario nuevoUsuario = new Usuario(fullName, correo, password, telefono);
+        if (usuarioDAO.registrarUsuario(nuevoUsuario)) {
+            JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente");
+            limpiarCampos();
+            new Login().setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void limpiarCampos() {
+        inputNamesRegister.setText("");
+        inputCorreoRegister.setText("");
+        inputPasswordRegister.setText("");
+        inputPasswordConfirmRegister.setText("");
+        inputTelRegister.setText("");
     }
 
     /**
@@ -66,7 +147,7 @@ public class Register extends javax.swing.JFrame {
         buttonRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel1.add(buttonRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 562, 300, 50));
 
-        inputCorreoRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputCorreoRegister.setBackground(new java.awt.Color(0, 0, 0, 0));
         inputCorreoRegister.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
         inputCorreoRegister.setForeground(new java.awt.Color(153, 153, 153));
         inputCorreoRegister.setText("Correo");
@@ -78,7 +159,7 @@ public class Register extends javax.swing.JFrame {
         });
         jPanel1.add(inputCorreoRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 290, 30));
 
-        inputNamesRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputNamesRegister.setBackground(new java.awt.Color(0, 0, 0, 0));
         inputNamesRegister.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
         inputNamesRegister.setForeground(new java.awt.Color(153, 153, 153));
         inputNamesRegister.setText("Nombre y Apellido");
@@ -90,28 +171,28 @@ public class Register extends javax.swing.JFrame {
         });
         jPanel1.add(inputNamesRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 182, 290, 30));
 
-        inputTelRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputTelRegister.setBackground(new java.awt.Color(0, 0, 0, 0));
         inputTelRegister.setBorder(null);
         inputTelRegister.setForeground(new java.awt.Color(153, 153, 153));
         inputTelRegister.setText("Telefono");
         inputTelRegister.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
         jPanel1.add(inputTelRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 500, 290, 30));
 
-        inputPasswordConfirmRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputPasswordConfirmRegister.setBackground(new java.awt.Color(0, 0, 0, 0));
         inputPasswordConfirmRegister.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         inputPasswordConfirmRegister.setForeground(new java.awt.Color(153, 153, 153));
         inputPasswordConfirmRegister.setText("jPasswordField1");
         inputPasswordConfirmRegister.setBorder(null);
         jPanel1.add(inputPasswordConfirmRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 420, 290, 30));
 
-        inputPasswordRegister.setBackground(new java.awt.Color(0, 0, 0));
+        inputPasswordRegister.setBackground(new java.awt.Color(0, 0, 0, 0));
         inputPasswordRegister.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         inputPasswordRegister.setForeground(new java.awt.Color(153, 153, 153));
         inputPasswordRegister.setText("jPasswordField1");
         inputPasswordRegister.setBorder(null);
         jPanel1.add(inputPasswordRegister, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 290, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/marco7.gif"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Register.gif"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
