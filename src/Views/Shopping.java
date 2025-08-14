@@ -39,7 +39,9 @@ public class Shopping extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
             // Deshabilita funciones que dependan de DB o cierra la ventana
         }
-        dao = new ProductDAO(cn);
+        ProductDAO dao = new ProductDAO(cn);
+
+        System.out.println(dao);
 
         logOut.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
