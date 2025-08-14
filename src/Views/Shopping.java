@@ -4,7 +4,12 @@
  */
 package Views;
 
+import java.sql.Connection;
+import conectDB.ProductDAO;
+import conectDB.conectMysql;
+import models.Usuario;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,21 +17,65 @@ import javax.swing.ImageIcon;
  */
 public class Shopping extends javax.swing.JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Shopping.class.getName());
+    private final conectMysql conexion = new conectMysql();
+    private final Connection cn;
 
     /**
      * Creates new form Shopping
+     *
+     * @param userInfo
      */
-    public Shopping() {
+    public Shopping(Usuario userInfo) {
         initComponents();
         this.setLocationRelativeTo(null);
         cargarImagenArena();
+        inputNameShow.setText(userInfo.getFullName());
+        inputTelShow.setText("Tel: " + userInfo.getTelefono());
+        cn = conexion.conectar();
+        if (cn == null) {
+            JOptionPane.showMessageDialog(this,
+                    "No se pudo conectar a la base de datos.",
+                    "Error de conexión",
+                    JOptionPane.ERROR_MESSAGE);
+            // Deshabilita funciones que dependan de DB o cierra la ventana
+        }
+        dao = new ProductDAO(cn);
+
+        logOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                handleActionLogOut();
+            }
+        });
     }
 
     private void cargarImagenArena() {
         ImageIcon icon = new ImageIcon(getClass().getResource("/Img/arena_1.gif"));
         Image1.setIcon(icon);
     }
+
+    private void handleActionLogOut() {
+        int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estás seguro que deseas cerrar sesión?",
+                "Confirmar cierre de sesión",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            // Acción si el usuario elige "Sí"
+            System.out.println("Cerrando sesión...");
+            dispose();
+            new Login().setVisible(true);
+        } else if (opcion == JOptionPane.NO_OPTION) {
+            // Acción si el usuario elige "No"
+            System.out.println("Cancelado por el usuario.");
+        }
+
+    }
+
+    ;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,55 +86,71 @@ public class Shopping extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound5 = new Clases.PanelRound();
+        panelRound5 = new models.PanelRound();
         jLabel8 = new javax.swing.JLabel();
-        panelRound17 = new Clases.PanelRound();
-        panelRound18 = new Clases.PanelRound();
-        panelRound19 = new Clases.PanelRound();
-        panelRound20 = new Clases.PanelRound();
+        panelRound17 = new models.PanelRound();
+        panelRound18 = new models.PanelRound();
+        panelRound19 = new models.PanelRound();
+        panelRound20 = new models.PanelRound();
         jSeparator4 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        panelRound1 = new Clases.PanelRound();
+        panelRound1 = new models.PanelRound();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        panelRound4 = new Clases.PanelRound();
+        panelRound4 = new models.PanelRound();
         Image1 = new javax.swing.JLabel();
-        panelRound6 = new Clases.PanelRound();
+        arenaPositionOne = new javax.swing.JLabel();
+        arenaDescriptionOne = new javax.swing.JLabel();
+        arenaPositionOne3 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        panelRound6 = new models.PanelRound();
         Image2 = new javax.swing.JLabel();
-        panelRound7 = new Clases.PanelRound();
+        arenaNameTwo = new javax.swing.JLabel();
+        arenaDescriptioTwo = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        panelRound7 = new models.PanelRound();
         Image3 = new javax.swing.JLabel();
-        panelRound8 = new Clases.PanelRound();
+        arenaNameThree = new javax.swing.JLabel();
+        arenaDescriptionThree = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        panelRound8 = new models.PanelRound();
         Image4 = new javax.swing.JLabel();
+        arenaNameFour = new javax.swing.JLabel();
+        arenaDescriptionFour = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
-        panelRound9 = new Clases.PanelRound();
-        panelRound10 = new Clases.PanelRound();
-        panelRound11 = new Clases.PanelRound();
-        panelRound12 = new Clases.PanelRound();
+        panelRound9 = new models.PanelRound();
+        panelRound10 = new models.PanelRound();
+        panelRound11 = new models.PanelRound();
+        panelRound12 = new models.PanelRound();
         jLabel7 = new javax.swing.JLabel();
-        panelRound13 = new Clases.PanelRound();
-        panelRound14 = new Clases.PanelRound();
-        panelRound15 = new Clases.PanelRound();
-        panelRound16 = new Clases.PanelRound();
+        panelRound13 = new models.PanelRound();
+        panelRound14 = new models.PanelRound();
+        panelRound15 = new models.PanelRound();
+        panelRound16 = new models.PanelRound();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
-        panelRound21 = new Clases.PanelRound();
-        panelRound22 = new Clases.PanelRound();
-        panelRound23 = new Clases.PanelRound();
-        panelRound24 = new Clases.PanelRound();
+        panelRound21 = new models.PanelRound();
+        panelRound22 = new models.PanelRound();
+        panelRound23 = new models.PanelRound();
+        panelRound24 = new models.PanelRound();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
-        panelRound25 = new Clases.PanelRound();
-        panelRound26 = new Clases.PanelRound();
-        panelRound27 = new Clases.PanelRound();
-        panelRound28 = new Clases.PanelRound();
+        panelRound25 = new models.PanelRound();
+        panelRound26 = new models.PanelRound();
+        panelRound27 = new models.PanelRound();
+        panelRound28 = new models.PanelRound();
         jSeparator6 = new javax.swing.JSeparator();
+        inputNameShow = new javax.swing.JLabel();
+        inputTelShow = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        logOut = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
 
         panelRound5.setBackground(new java.awt.Color(51, 51, 51));
         panelRound5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -182,17 +247,50 @@ public class Shopping extends javax.swing.JFrame {
         Image1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Image1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/arena_1.gif"))); // NOI18N
 
+        arenaPositionOne.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        arenaPositionOne.setForeground(new java.awt.Color(255, 204, 0));
+        arenaPositionOne.setText("Litle Ceaser");
+
+        arenaDescriptionOne.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        arenaDescriptionOne.setForeground(new java.awt.Color(255, 255, 255));
+        arenaDescriptionOne.setText("jLabel3");
+
+        arenaPositionOne3.setForeground(new java.awt.Color(255, 255, 255));
+        arenaPositionOne3.setText("jLabel3");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setText("+");
+
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
         panelRound4.setLayout(panelRound4Layout);
         panelRound4Layout.setHorizontalGroup(
             panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Image1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+            .addGroup(panelRound4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(arenaDescriptionOne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(arenaPositionOne3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRound4Layout.createSequentialGroup()
+                        .addComponent(arenaPositionOne, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)))
+                .addContainerGap())
         );
         panelRound4Layout.setVerticalGroup(
             panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound4Layout.createSequentialGroup()
-                .addComponent(Image1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(Image1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(arenaPositionOne)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(arenaDescriptionOne)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(arenaPositionOne3)
+                .addGap(0, 21, Short.MAX_VALUE))
         );
 
         panelRound6.setBackground(new java.awt.Color(51, 51, 51, 0));
@@ -200,20 +298,43 @@ public class Shopping extends javax.swing.JFrame {
 
         Image2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/arena_2.gif"))); // NOI18N
 
+        arenaNameTwo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        arenaNameTwo.setForeground(new java.awt.Color(255, 204, 0));
+        arenaNameTwo.setText("jLabel3");
+
+        arenaDescriptioTwo.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        arenaDescriptioTwo.setForeground(new java.awt.Color(255, 255, 255));
+        arenaDescriptioTwo.setText("jLabel3");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel11.setText("+");
+
         javax.swing.GroupLayout panelRound6Layout = new javax.swing.GroupLayout(panelRound6);
         panelRound6.setLayout(panelRound6Layout);
         panelRound6Layout.setHorizontalGroup(
             panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Image2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Image2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRound6Layout.createSequentialGroup()
+                        .addComponent(arenaNameTwo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11))
+                    .addComponent(arenaDescriptioTwo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelRound6Layout.setVerticalGroup(
             panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Image2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Image2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRound6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(arenaNameTwo)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(arenaDescriptioTwo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -222,13 +343,31 @@ public class Shopping extends javax.swing.JFrame {
 
         Image3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/arena_3.gif"))); // NOI18N
 
+        arenaNameThree.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        arenaNameThree.setForeground(new java.awt.Color(255, 204, 0));
+        arenaNameThree.setText("jLabel3");
+
+        arenaDescriptionThree.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        arenaDescriptionThree.setForeground(new java.awt.Color(255, 255, 255));
+        arenaDescriptionThree.setText("jLabel3");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel12.setText("+");
+
         javax.swing.GroupLayout panelRound7Layout = new javax.swing.GroupLayout(panelRound7);
         panelRound7.setLayout(panelRound7Layout);
         panelRound7Layout.setHorizontalGroup(
             panelRound7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Image3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelRound7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Image3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRound7Layout.createSequentialGroup()
+                        .addComponent(arenaNameThree, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12))
+                    .addComponent(arenaDescriptionThree, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelRound7Layout.setVerticalGroup(
@@ -236,7 +375,13 @@ public class Shopping extends javax.swing.JFrame {
             .addGroup(panelRound7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Image3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRound7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(arenaNameThree)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(arenaDescriptionThree)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelRound8.setBackground(new java.awt.Color(51, 51, 51, 0));
@@ -244,20 +389,44 @@ public class Shopping extends javax.swing.JFrame {
 
         Image4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/arena_4.gif"))); // NOI18N
 
+        arenaNameFour.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        arenaNameFour.setForeground(new java.awt.Color(255, 204, 0));
+        arenaNameFour.setText("jLabel3");
+
+        arenaDescriptionFour.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        arenaDescriptionFour.setForeground(new java.awt.Color(255, 255, 255));
+        arenaDescriptionFour.setText("jLabel3");
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel14.setText("+");
+
         javax.swing.GroupLayout panelRound8Layout = new javax.swing.GroupLayout(panelRound8);
         panelRound8.setLayout(panelRound8Layout);
         panelRound8Layout.setHorizontalGroup(
             panelRound8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Image4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelRound8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Image4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRound8Layout.createSequentialGroup()
+                        .addComponent(arenaNameFour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14))
+                    .addComponent(arenaDescriptionFour, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelRound8Layout.setVerticalGroup(
             panelRound8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Image4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Image4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRound8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(arenaNameFour)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(arenaDescriptionFour)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -509,21 +678,6 @@ public class Shopping extends javax.swing.JFrame {
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addComponent(panelRound21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelRound22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelRound23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelRound24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel6)
-                                .addGap(1157, 1157, 1157)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -532,6 +686,20 @@ public class Shopping extends javax.swing.JFrame {
                             .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(panelRound1Layout.createSequentialGroup()
                         .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelRound1Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(panelRound1Layout.createSequentialGroup()
+                                        .addComponent(panelRound21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(panelRound22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(panelRound23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(panelRound24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(panelRound1Layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addGap(1157, 1157, 1157))))
                             .addGroup(panelRound1Layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
                                 .addComponent(jLabel9))
@@ -597,7 +765,7 @@ public class Shopping extends javax.swing.JFrame {
                     .addComponent(panelRound8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelRound6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelRound4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRound7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelRound7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -647,6 +815,18 @@ public class Shopping extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 1350, 690));
 
+        inputNameShow.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        inputNameShow.setForeground(new java.awt.Color(255, 255, 255));
+        inputNameShow.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        inputNameShow.setText("Nombre");
+        jPanel1.add(inputNameShow, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 90, 160, -1));
+
+        inputTelShow.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        inputTelShow.setForeground(new java.awt.Color(255, 255, 255));
+        inputTelShow.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        inputTelShow.setText("Nombre");
+        jPanel1.add(inputTelShow, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 110, 160, -1));
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -659,14 +839,14 @@ public class Shopping extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 30, 90, 30));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Cerrar sesión");
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 30, 130, 30));
+        logOut.setFont(new java.awt.Font("Segoe UI", 2, 16)); // NOI18N
+        logOut.setForeground(new java.awt.Color(255, 255, 255));
+        logOut.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        logOut.setText("Cerrar sesión");
+        logOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.add(logOut, new org.netbeans.lib.awtextra.AbsoluteConstraints(1140, 30, 130, 30));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Buscar");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 26, -1, 30));
@@ -682,11 +862,15 @@ public class Shopping extends javax.swing.JFrame {
         jTextField1.setBorder(null);
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, 570, 20));
 
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel13.setText("+");
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1510, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -703,35 +887,29 @@ public class Shopping extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Shopping().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Image1;
     private javax.swing.JLabel Image2;
     private javax.swing.JLabel Image3;
     private javax.swing.JLabel Image4;
+    private javax.swing.JLabel arenaDescriptioTwo;
+    private javax.swing.JLabel arenaDescriptionFour;
+    private javax.swing.JLabel arenaDescriptionOne;
+    private javax.swing.JLabel arenaDescriptionThree;
+    private javax.swing.JLabel arenaNameFour;
+    private javax.swing.JLabel arenaNameThree;
+    private javax.swing.JLabel arenaNameTwo;
+    private javax.swing.JLabel arenaPositionOne;
+    private javax.swing.JLabel arenaPositionOne3;
+    private javax.swing.JLabel inputNameShow;
+    private javax.swing.JLabel inputTelShow;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -749,31 +927,32 @@ public class Shopping extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTextField jTextField1;
-    private Clases.PanelRound panelRound1;
-    private Clases.PanelRound panelRound10;
-    private Clases.PanelRound panelRound11;
-    private Clases.PanelRound panelRound12;
-    private Clases.PanelRound panelRound13;
-    private Clases.PanelRound panelRound14;
-    private Clases.PanelRound panelRound15;
-    private Clases.PanelRound panelRound16;
-    private Clases.PanelRound panelRound17;
-    private Clases.PanelRound panelRound18;
-    private Clases.PanelRound panelRound19;
-    private Clases.PanelRound panelRound20;
-    private Clases.PanelRound panelRound21;
-    private Clases.PanelRound panelRound22;
-    private Clases.PanelRound panelRound23;
-    private Clases.PanelRound panelRound24;
-    private Clases.PanelRound panelRound25;
-    private Clases.PanelRound panelRound26;
-    private Clases.PanelRound panelRound27;
-    private Clases.PanelRound panelRound28;
-    private Clases.PanelRound panelRound4;
-    private Clases.PanelRound panelRound5;
-    private Clases.PanelRound panelRound6;
-    private Clases.PanelRound panelRound7;
-    private Clases.PanelRound panelRound8;
-    private Clases.PanelRound panelRound9;
+    private javax.swing.JLabel logOut;
+    private models.PanelRound panelRound1;
+    private models.PanelRound panelRound10;
+    private models.PanelRound panelRound11;
+    private models.PanelRound panelRound12;
+    private models.PanelRound panelRound13;
+    private models.PanelRound panelRound14;
+    private models.PanelRound panelRound15;
+    private models.PanelRound panelRound16;
+    private models.PanelRound panelRound17;
+    private models.PanelRound panelRound18;
+    private models.PanelRound panelRound19;
+    private models.PanelRound panelRound20;
+    private models.PanelRound panelRound21;
+    private models.PanelRound panelRound22;
+    private models.PanelRound panelRound23;
+    private models.PanelRound panelRound24;
+    private models.PanelRound panelRound25;
+    private models.PanelRound panelRound26;
+    private models.PanelRound panelRound27;
+    private models.PanelRound panelRound28;
+    private models.PanelRound panelRound4;
+    private models.PanelRound panelRound5;
+    private models.PanelRound panelRound6;
+    private models.PanelRound panelRound7;
+    private models.PanelRound panelRound8;
+    private models.PanelRound panelRound9;
     // End of variables declaration//GEN-END:variables
 }

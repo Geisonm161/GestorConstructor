@@ -10,8 +10,13 @@ import java.sql.Statement;
 import conectDB.conectMysql;
 import java.sql.Connection;
 import java.sql.SQLException;
-import clases.Usuario;
+import models.Usuario;
+import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -23,6 +28,11 @@ public class Register extends javax.swing.JFrame {
     Connection cn = con.conectar();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Register.class.getName());
     private final UsuarioDAO usuarioDAO;
+    private final String PLACEHOLDER_NOMBRES = "Nombre y Apellido";
+    private final String PLACEHOLDER_CORREO = "Correo";
+    private final String PLACEHOLDER_PASSWORD = "Contraseña";
+    private final String PLACEHOLDER_PASSWORD_CONFIRM = "Confirmar contraseña";
+    private final String PLACEHOLDER_TELEFONO = "(   )   -   ";
 
     /**
      * Creates new form Register
@@ -32,16 +42,18 @@ public class Register extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         showData();
         usuarioDAO = new UsuarioDAO();
+        configurarMascaraTelefono();
+        configurarPlaceholders();
+        configurarEventos();
+    }
 
-        // Acción clic en el botón de registrar
+    private void configurarEventos() {
         buttonRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 registrarUsuario();
             }
         });
-
-        // Acción clic en el enlace de volver a acceso
         enlaceBackRegister.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -49,7 +61,130 @@ public class Register extends javax.swing.JFrame {
                 dispose();
             }
         });
+    }
 
+    private void configurarMascaraTelefono() {
+        try {
+            MaskFormatter maskTelefono = new MaskFormatter("(###) ###-####");
+            maskTelefono.setPlaceholderCharacter(' ');
+            maskTelefono.install(inputTelRegister);
+
+            inputTelRegister.setForeground(new Color(153, 153, 153));
+        } catch (ParseException e) {
+            logger.log(java.util.logging.Level.WARNING, "Error al configurar máscara de teléfono", e);
+        }
+    }
+
+    private void configurarPlaceholders() {
+        // Configurar placeholder para nombres
+        inputNamesRegister.setText(PLACEHOLDER_NOMBRES);
+        inputNamesRegister.setForeground(new Color(153, 153, 153));
+        inputNamesRegister.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (inputNamesRegister.getText().equals(PLACEHOLDER_NOMBRES)) {
+                    inputNamesRegister.setText("");
+                    inputNamesRegister.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (inputNamesRegister.getText().isEmpty()) {
+                    inputNamesRegister.setText(PLACEHOLDER_NOMBRES);
+                    inputNamesRegister.setForeground(new Color(153, 153, 153));
+                }
+            }
+        });
+
+        // Configurar placeholder para correo
+        inputCorreoRegister.setText(PLACEHOLDER_CORREO);
+        inputCorreoRegister.setForeground(new Color(153, 153, 153));
+        inputCorreoRegister.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (inputCorreoRegister.getText().equals(PLACEHOLDER_CORREO)) {
+                    inputCorreoRegister.setText("");
+                    inputCorreoRegister.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (inputCorreoRegister.getText().isEmpty()) {
+                    inputCorreoRegister.setText(PLACEHOLDER_CORREO);
+                    inputCorreoRegister.setForeground(new Color(153, 153, 153));
+                }
+            }
+        });
+
+        // Configurar placeholder para contraseña
+        inputPasswordRegister.setText(PLACEHOLDER_PASSWORD);
+        inputPasswordRegister.setForeground(new Color(153, 153, 153));
+        inputPasswordRegister.setEchoChar((char) 0); // Mostrar texto como placeholder
+        inputPasswordRegister.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                String currentText = new String(inputPasswordRegister.getPassword());
+                if (currentText.equals(PLACEHOLDER_PASSWORD)) {
+                    inputPasswordRegister.setText("");
+                    inputPasswordRegister.setForeground(Color.WHITE);
+                    inputPasswordRegister.setEchoChar('*'); // Ocultar contraseña
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                String currentText = new String(inputPasswordRegister.getPassword());
+                if (currentText.isEmpty()) {
+                    inputPasswordRegister.setText(PLACEHOLDER_PASSWORD);
+                    inputPasswordRegister.setForeground(new Color(153, 153, 153));
+                    inputPasswordRegister.setEchoChar((char) 0); // Mostrar placeholder
+                }
+            }
+        });
+
+        // Configurar placeholder para confirmar contraseña
+        inputPasswordConfirmRegister.setText(PLACEHOLDER_PASSWORD_CONFIRM);
+        inputPasswordConfirmRegister.setForeground(new Color(153, 153, 153));
+        inputPasswordConfirmRegister.setEchoChar((char) 0); // Mostrar texto como placeholder
+        inputPasswordConfirmRegister.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                String currentText = new String(inputPasswordConfirmRegister.getPassword());
+                if (currentText.equals(PLACEHOLDER_PASSWORD_CONFIRM)) {
+                    inputPasswordConfirmRegister.setText("");
+                    inputPasswordConfirmRegister.setForeground(Color.WHITE);
+                    inputPasswordConfirmRegister.setEchoChar('*'); // Ocultar contraseña
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                String currentText = new String(inputPasswordConfirmRegister.getPassword());
+                if (currentText.isEmpty()) {
+                    inputPasswordConfirmRegister.setText(PLACEHOLDER_PASSWORD_CONFIRM);
+                    inputPasswordConfirmRegister.setForeground(new Color(153, 153, 153));
+                    inputPasswordConfirmRegister.setEchoChar((char) 0); // Mostrar placeholder
+                }
+            }
+        });
+
+        // Configurar placeholder para teléfono
+        inputTelRegister.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                inputTelRegister.setForeground(Color.WHITE);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                String telefono = inputTelRegister.getText().replaceAll("[\\s()\\-]", "");
+                if (telefono.isEmpty()) {
+                    inputTelRegister.setForeground(new Color(153, 153, 153));
+                }
+            }
+        });
     }
 
     private void registrarUsuario() {
@@ -101,13 +236,23 @@ public class Register extends javax.swing.JFrame {
     }
 
     private void limpiarCampos() {
-        inputNamesRegister.setText("");
-        inputCorreoRegister.setText("");
-        inputPasswordRegister.setText("");
-        inputPasswordConfirmRegister.setText("");
-        inputTelRegister.setText("");
-    }
+        inputNamesRegister.setText(PLACEHOLDER_NOMBRES);
+        inputNamesRegister.setForeground(new Color(153, 153, 153));
 
+        inputCorreoRegister.setText(PLACEHOLDER_CORREO);
+        inputCorreoRegister.setForeground(new Color(153, 153, 153));
+
+        inputPasswordRegister.setText(PLACEHOLDER_PASSWORD);
+        inputPasswordRegister.setForeground(new Color(153, 153, 153));
+        inputPasswordRegister.setEchoChar((char) 0);
+
+        inputPasswordConfirmRegister.setText(PLACEHOLDER_PASSWORD_CONFIRM);
+        inputPasswordConfirmRegister.setForeground(new Color(153, 153, 153));
+        inputPasswordConfirmRegister.setEchoChar((char) 0);
+
+        inputTelRegister.setText("");
+        inputTelRegister.setForeground(new Color(153, 153, 153));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -217,30 +362,6 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputNamesRegisterActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Register().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel buttonRegister;

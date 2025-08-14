@@ -5,7 +5,10 @@
 package Views;
 
 import conectDB.UsuarioDAO;
-import clases.Usuario;
+import models.Usuario;
+import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,6 +19,8 @@ public class Login extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
     private UsuarioDAO usuarioDAO;
+    private final String CORREO_PLACEHOLDER = "Correo";
+    private final String PASSWORD_PLACEHOLDER = "Contraseña";
 
     /**
      * Creates new form Login
@@ -24,6 +29,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         usuarioDAO = new UsuarioDAO();
+        configurarCamposConPlaceholders();
 
         // Acción clic en el enlace de registro
         enlaceRegisterLogin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -43,11 +49,68 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Configuracion de campos de texto con placeholders
+     */
+    private void configurarCamposConPlaceholders() {
+        // Configurar campo de correo
+        inputCorreoLogin.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (inputCorreoLogin.getText().equals(CORREO_PLACEHOLDER)) {
+                    inputCorreoLogin.setText("");
+                    inputCorreoLogin.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (inputCorreoLogin.getText().trim().isEmpty()) {
+                    inputCorreoLogin.setText(CORREO_PLACEHOLDER);
+                    inputCorreoLogin.setForeground(new Color(153, 153, 153));
+                }
+            }
+        });
+
+        // Configurar campo de contraseña
+        inputPasswordLogin.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                String passwordText = new String(inputPasswordLogin.getPassword());
+                if (passwordText.equals(PASSWORD_PLACEHOLDER)) {
+                    inputPasswordLogin.setText("");
+                    inputPasswordLogin.setForeground(Color.WHITE);
+                    inputPasswordLogin.setEchoChar('•'); // Mostrar caracteres de contraseña
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                String passwordText = new String(inputPasswordLogin.getPassword());
+                if (passwordText.trim().isEmpty()) {
+                    inputPasswordLogin.setText(PASSWORD_PLACEHOLDER);
+                    inputPasswordLogin.setForeground(new Color(153, 153, 153));
+                    inputPasswordLogin.setEchoChar((char) 0); // Mostrar texto plano para placeholder
+                }
+            }
+        });
+
+        // Inicializar estados
+        inputCorreoLogin.setText(CORREO_PLACEHOLDER);
+        inputCorreoLogin.setForeground(new Color(153, 153, 153));
+
+        inputPasswordLogin.setText(PASSWORD_PLACEHOLDER);
+        inputPasswordLogin.setForeground(new Color(153, 153, 153));
+        inputPasswordLogin.setEchoChar((char) 0); // Sin caracteres de contraseña para placeholder
+    }
+
     private void iniciarSesion() {
         String correo = inputCorreoLogin.getText().trim();
         String password = new String(inputPasswordLogin.getPassword()).trim();
 
-        if (correo.isEmpty() || password.isEmpty()) {
+        // Verificar si los campos contienen placeholders o están vacíos
+        if (correo.isEmpty() || correo.equals(CORREO_PLACEHOLDER)
+                || password.isEmpty() || password.equals(PASSWORD_PLACEHOLDER)) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -60,7 +123,7 @@ public class Login extends javax.swing.JFrame {
         Usuario usuario = usuarioDAO.autenticarUsuario(correo, password);
         if (usuario != null) {
             JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getFullName());
-            new Shopping().setVisible(true);
+            new Shopping(usuario).setVisible(true);
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);

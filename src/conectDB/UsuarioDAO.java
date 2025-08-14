@@ -1,6 +1,6 @@
 package conectDB;
 
-import clases.Usuario;
+import models.Usuario;
 import java.sql.*;
 import java.util.regex.Pattern;
 
@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * @author Katherine Matos
  */
 public class UsuarioDAO {
-    private conectMysql conexion;
+    private final conectMysql conexion;
 
     public UsuarioDAO() {
         conexion = new conectMysql();
@@ -65,7 +65,7 @@ public class UsuarioDAO {
 
             statement.setString(1, correo);
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
+                if (resultSet.next( )) {
                     return resultSet.getInt(1) > 0;
                 }
             }
