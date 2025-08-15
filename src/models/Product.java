@@ -18,8 +18,9 @@ public class Product {
     private String hardwareStoreName;
     private String address;
     private String contact;
+    private int categoryId;
 
-    public void setFullInfoProduct(String productName, String productDescription, String price, String unit, String imagePath, String hardwareStoreName, String address, String contact) {
+    public void setFullInfoProduct(String productName, String productDescription, String price, String unit, String imagePath, String hardwareStoreName, String address, String contact, int categoryId) {
         this.productName = productName;
         this.productDescription = productDescription;
         this.price = price;
@@ -28,6 +29,7 @@ public class Product {
         this.hardwareStoreName = hardwareStoreName;
         this.address = address;
         this.contact = contact;
+        this.categoryId = categoryId;
 
     }
 
@@ -61,5 +63,9 @@ public class Product {
 
     public String getContact() {
         return this.contact;
+    }
+
+    public int getCategoryId() {
+        return this.categoryId;
     }
 }
