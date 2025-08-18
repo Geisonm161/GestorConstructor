@@ -45,6 +45,12 @@ public class Register extends javax.swing.JFrame {
         configurarMascaraTelefono();
         configurarPlaceholders();
         configurarEventos();
+
+        setResizable(false);       // desactiva redimensionar y con ello el botón maximizar
+// opcional: fija tamaño exacto
+        setSize(1280, 730);
+        setMinimumSize(getSize());
+        setMaximumSize(getSize()); // así nadie lo cambia por código
     }
 
     private void configurarEventos() {
@@ -253,6 +259,7 @@ public class Register extends javax.swing.JFrame {
         inputTelRegister.setText("");
         inputTelRegister.setForeground(new Color(153, 153, 153));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

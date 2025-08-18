@@ -47,6 +47,30 @@ public class Login extends javax.swing.JFrame {
                 iniciarSesion();
             }
         });
+
+        // Enter en correo o contraseña => iniciar sesión
+        inputCorreoLogin.addActionListener(e -> iniciarSesion());
+        inputPasswordLogin.addActionListener(e -> iniciarSesion());
+
+// Enter en cualquier parte de la ventana => iniciar sesión
+        getRootPane()
+                .getInputMap(javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ENTER, 0), "DO_LOGIN");
+        getRootPane()
+                .getActionMap()
+                .put("DO_LOGIN", new javax.swing.AbstractAction() {
+                    @Override
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        iniciarSesion();
+                    }
+                });
+        
+        setResizable(false);       // desactiva redimensionar y con ello el botón maximizar
+// opcional: fija tamaño exacto
+        setSize(1280, 730);
+        setMinimumSize(getSize());
+        setMaximumSize(getSize()); // así nadie lo cambia por código
+
     }
 
     /**
