@@ -48,7 +48,7 @@ public class Register extends javax.swing.JFrame {
 
         setResizable(false);       // desactiva redimensionar y con ello el botón maximizar
 // opcional: fija tamaño exacto
-        setSize(1280, 730);
+        setSize(1280, 740);
         setMinimumSize(getSize());
         setMaximumSize(getSize()); // así nadie lo cambia por código
     }
