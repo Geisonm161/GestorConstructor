@@ -26,6 +26,17 @@ La aplicación permite **consultar productos, visualizar detalles, organizar com
 
 ---
 
+## 📸 Imágenes del Proyecto
+- Pantalla de Login  
+![Login](./images/loginShow.png)
+
+- Pantalla de Productos  
+![Productos](./images/registerShow.png)
+
+- Carrito de Compras  
+![Carrito](./images/marketShow.png)
+
+
 👥 Equipo de Desarrollo
 
 Este proyecto fue desarrollado por los estudiantes de Programación I – ITLA:
