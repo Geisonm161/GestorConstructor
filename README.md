@@ -26,8 +26,19 @@ La aplicación permite **consultar productos, visualizar detalles, organizar com
 
 ---
 
+👥 Equipo de Desarrollo
+
+Este proyecto fue desarrollado por los estudiantes de Programación I – ITLA:
+
+👨‍💻 Geison Medina – Mat. 2022-1112
+
+👩‍💻 Katherine Matos – Mat. 2024-1577
+
+👩‍💻 Osmarlys Flores – Mat. 2024-2262
+
 ## ⚙️ Instalación y Ejecución
 1. Clonar el repositorio:
    ```bash
    git clone https://github.com/usuario/GestorConstructor.git
    cd GestorConstructor
+   
