@@ -31,10 +31,10 @@ La aplicación permite **consultar productos, visualizar detalles, organizar com
 ![Login](./img/loginShow.gif)
 
 - Pantalla de Productos  
-![Productos](./img/registerShow.png)
+![Productos](./img/registerShow.gif)
 
 - Carrito de Compras  
-![Carrito](./img/marketShow.png)
+![Carrito](./img/marketShow.gif)
 
 
 👥 Equipo de Desarrollo
