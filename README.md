@@ -41,11 +41,11 @@ La aplicación permite **consultar productos, visualizar detalles, organizar com
 
 Este proyecto fue desarrollado por los estudiantes de Programación I – ITLA:
 
-👨‍💻 Geison Medina – Mat. 2022-1112
+👨‍💻 Geison Medina – Mat. 2022-1112 (Líder del equipo)
 
-👩‍💻 Katherine Matos – Mat. 2024-1577
+👩‍💻 Katherine Matos – Mat. 2024-1577 (DBA)
 
-👩‍💻 Osmarlys Flores – Mat. 2024-2262
+👩‍💻 Osmarlys Flores – Mat. 2024-2262 (SQA y Diseño)
 
 ## ⚙️ Instalación y Ejecución
 1. Clonar el repositorio:
