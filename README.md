@@ -28,13 +28,13 @@ La aplicación permite **consultar productos, visualizar detalles, organizar com
 
 ## 📸 Imágenes del Proyecto
 - Pantalla de Login  
-![Login](./images/loginShow.png)
+![Login](./img/loginShow.png)
 
 - Pantalla de Productos  
-![Productos](./images/registerShow.png)
+![Productos](./img/registerShow.png)
 
 - Carrito de Compras  
-![Carrito](./images/marketShow.png)
+![Carrito](./img/marketShow.png)
 
 
 👥 Equipo de Desarrollo
