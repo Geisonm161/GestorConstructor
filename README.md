@@ -28,7 +28,7 @@ La aplicación permite **consultar productos, visualizar detalles, organizar com
 
 ## 📸 Imágenes del Proyecto
 - Pantalla de Login  
-![Login](./img/loginShow.png)
+![Login](./img/loginShow.gif)
 
 - Pantalla de Productos  
 ![Productos](./img/registerShow.png)
