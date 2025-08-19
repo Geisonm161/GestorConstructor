@@ -33,7 +33,6 @@ public class CartDialog extends JDialog {
     private final JLabel lblTot = new JLabel();
     private final DecimalFormat df = new DecimalFormat("#,##0.00");
 
-    private JButton btnDel;
     private JButton btnClear;
     private JButton btnInvoice;
     private JButton btnClose;
@@ -72,13 +71,11 @@ public class CartDialog extends JDialog {
         south.add(totals, BorderLayout.EAST);
 
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnDel = new JButton("Eliminar seleccionado");
         btnClear = new JButton("Vaciar carrito");
         btnInvoice = new JButton("Ver factura digital");
         btnClose = new JButton("Cerrar");
         btnCheckout = new JButton("Realizar compra");
 
-        actions.add(btnDel);
         actions.add(btnClear);
         actions.add(btnInvoice);
         actions.add(btnClose);
@@ -88,7 +85,6 @@ public class CartDialog extends JDialog {
         add(south, BorderLayout.SOUTH);
 
         // Listeners
-        btnDel.addActionListener(e -> removeSelected());
         btnClear.addActionListener(e -> {
             cart.clear();
             refresh();
@@ -177,9 +173,6 @@ public class CartDialog extends JDialog {
         lblTot.setText("RD$ " + df.format(cart.getTotal()));
 
         boolean hasItems = !cart.getItems().isEmpty();
-        if (btnDel != null) {
-            btnDel.setEnabled(hasItems && table.getSelectedRow() >= 0);
-        }
         if (btnClear != null) {
             btnClear.setEnabled(hasItems);
         }
