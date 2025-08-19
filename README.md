@@ -20,6 +20,9 @@ La aplicación permite **consultar productos, visualizar detalles, organizar com
 - **MySQL** – Base de datos relacional.  
 - **NetBeans IDE** – Entorno de desarrollo.  
 - **JDBC** – Conexión entre Java y MySQL.  
+- **Adobe Illustrator** – Diseño de logotipos e iconografía.  
+- **Adobe Photoshop** – Edición de imágenes.  
+- **Figma** – Prototipado y diseño de interfaces.  
 
 ---
 
